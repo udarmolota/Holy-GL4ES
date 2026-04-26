@@ -69,6 +69,7 @@ SET(GL_SRC
 	gl/wrap/gles.c
 	gl/wrap/glstub.c
 	gl/math/matheval.c
+	gl/vgpu/shaderconv.c
 )
 
 SET(GL_H
@@ -134,6 +135,7 @@ SET(GL_H
     gl/wrap/gl4es.h
     gl/wrap/gles.h
     gl/wrap/stub.h
+	gl/vgpu/shaderconv.h
 )
 
 set_source_files_properties(gl/build_info.c PROPERTIES OBJECT_OUTPUTS "dummy.c")
@@ -202,6 +204,9 @@ else()
             target_link_libraries(GL X11 m dl)
         endif()
     endif()
+	if(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+		target_link_libraries(GL log m dl)
+	endif()
     if(USE_CLOCK)
         target_link_libraries(GL rt)
     endif()
